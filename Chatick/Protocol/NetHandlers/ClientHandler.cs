@@ -37,6 +37,7 @@ namespace Chatick.Protocol.NetHandlers
             if(packet.mode == 1)
             {
                 filename = Encoding.UTF8.GetString(packet.data);
+                msgr.RizeFileEvent(filename);
             }
             else if(packet.mode == 2)
             {

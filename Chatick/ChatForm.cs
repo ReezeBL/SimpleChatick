@@ -23,6 +23,12 @@ namespace Chatick
             this.Text += " " + msgr.mainUser.username;
             msgr.chatMessage += Msgr_chatMessage;
             msgr.disconnectEvent += Msgr_disconnectEvent;
+            msgr.fileEvent += Msgr_fileEvent;
+        }
+
+        private void Msgr_fileEvent(object sender, string e)
+        {
+            chatTextBox.AppendText("Полуаю файл " + e + Environment.NewLine);
         }
 
         private void Msgr_disconnectEvent()
@@ -65,8 +71,11 @@ namespace Chatick
         {
             openFileDialog1.ShowDialog();
             string filename = openFileDialog1.FileName;
-            msgr.SendPacket(new Protocol.Packets.PacketFileExchnage(1, Encoding.UTF8.GetBytes(filename)));
-            msgr.SendPacket(new Protocol.Packets.PacketFileExchnage(2, File.ReadAllBytes(filename)));
+            if (filename != null)
+            {
+                msgr.SendPacket(new Protocol.Packets.PacketFileExchnage(1, Encoding.UTF8.GetBytes(openFileDialog1.SafeFileName)));
+                msgr.SendPacket(new Protocol.Packets.PacketFileExchnage(2, File.ReadAllBytes(filename)));
+            }
         }
     }
 }

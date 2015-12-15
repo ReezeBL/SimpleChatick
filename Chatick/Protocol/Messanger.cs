@@ -33,6 +33,12 @@ namespace Chatick.Protocol
                 disconnectEvent();
         }
 
+        public void RizeFileEvent(String filename)
+        {
+            if (fileEvent != null)
+                fileEvent(null, filename);
+        }
+
         #endregion
         public Messanger(Stream stream, string username)
         {
